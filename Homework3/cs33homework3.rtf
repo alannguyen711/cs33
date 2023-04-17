@@ -1,0 +1,40 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;}
+{\*\expandedcolortbl;;\cssrgb\c0\c1\c1;\cssrgb\c100000\c100000\c99985\c0;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\deftab593
+\pard\tx593\pardeftab593\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 void psum_4by1unrolled(float a[], float p[], long count) \{\
+    long i; // index counter\
+    float prev_value, value;\
+    prev_value = p[0] = a[0];\
+\
+    float n0, n1, n2, n3;\
+\
+    for (i = 1; i < count - 4; i=i+4) // four way unrolling\
+    \{\
+        n0 = prev_value + a[i];\
+        n1 = n0 + a[i+1];\
+        n2 = n1 + a[i+2];\
+        n3 = n2 + a[i+3];\
+\
+        p[i] = n0;\
+        p[i+1] = n1;\
+        p[i+2] = n2;\
+        p[i+3] = n3;\
+\
+        prev_value = prev_value + (a[i] + a[i+1] + a[i+2] + a[i+3]);\
+    \}\
+\
+    // continue for the remaining elements\
+    for (; i < count; i++) \{\
+        prev_value += a[i];\
+        p[i] = prev_value;\
+    \}\
+\}\
+\expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf2 The throughput and latency limits of my machine will limit the minimum CPE I can achieve for the prefix-sum operation. The CPE has to read one value in memory for each element that I am to compute. The performance of my program will depend on the latency limit of my machine. This, along with combining operations, will limit the minimum CPE I can achieve.}
